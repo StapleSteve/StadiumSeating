@@ -1,5 +1,5 @@
 /*
-*	    name: cts.cpp
+*	    name: StadiumSeating.cpp
 *        author: Thomas Moody
 * date modified: 28 October 2012
 *

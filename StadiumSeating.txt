@@ -1,0 +1,119 @@
+General plan:
+
+1)	Define struct seating, probably something like:
+
+	struct seating {
+		string price;
+		string custID;
+		  bool filled;
+		string row;
+		   int column;
+		  bool discount;
+ 	}
+
+	and a hypothetical seating chart with the same properties.
+
+2) Populate a 2D array for the stadium of basetype seating
+
+3) Populate a 1D array for hypothetical seating, 12 slots of basetype seating. This will be altered to hold copies of seating from the stadium array, then used to alter the stadium array when the appropriate conditions are met.
+
+
+
+Functions
+
+Main
+	  purpose: builds 2D stadium array of base type stadium
+	arguments: none
+	  returns: nothing
+	  effects: calls on populate_array to fill the stadium, calls
+		   on read_in_input for book keeping
+	    notes: Generally for delegating tasks
+
+populate_array
+	  purpose: fills 2D stadium array of base type stadium, defines member variables
+	arguments: 2D array of seating
+	  returns: 0
+	  effects: Stadium array is filled with empty seats
+	    notes: Should only be called once.
+
+read_in_input
+	  purpose: book keeping function, take in user request and sends info to appropriate functions
+	arguments: 2D array of seating, hypothetical 1D seating array
+	  returns: nothing
+	  effects: cout's to screen with appropriate message
+	    notes: Generally for delegating tasks
+
+PR
+	  purpose: prints out current seating arrangement
+	arguments: stadium array
+	  returns: nothing
+	  effects: cout's the current array in a readable way, calculates revenue
+	    notes: Doesn't alter array, only time revenue is counted and needs to check every seat anyway, so contains 			   code for summing revenue
+
+QU
+	  purpose: Quits program
+	arguments: none
+	  returns: bool
+	  effects: program terminates (passed along through read_in_input)
+	    notes: none
+
+CA
+	  purpose: Cancels an existing reservation, refunds money
+	arguments: string custID
+	  returns: bool, double revenue
+	  effects: empties the array of seats owned by a certain custID
+	    notes: Changes stadium array
+
+RQ
+	  purpose: Handles reservations, fills seats (and member variables)
+	arguments: Stadium array, hypothetical seating array, string custID, string #seats, string prices
+	  returns: bool
+	  effects: Passes on info to approriate function based on its arguments for filling seats, checks if all the neccesary 			   conditions are met then tries to fill seats. Returns true when seating was succesful
+	    notes: changes array when necc. conditions are met
+
+bad_num_seats
+	  purpose: checks if the # of seats requested is legal
+	arguments: string # seats
+	  returns: bool
+	  effects: none itself, effects the loop in RQ
+	    notes: 
+
+custID_already_reserved
+	  purpose: checks if the custID given has already been used
+	arguments: string custID
+	  returns: bool
+	  effects: none itself, its return values controls loop in RQ (like bad_num_seats)
+	    notes: 
+
+
+seat_available
+	  purpose: book keeping, delegates to appropriate functions for filling seats
+	arguments: stadium array, hypothetical seating array, string price
+	  returns: bool
+	  effects: calls on functions that check for seating
+	    notes: called last in RQ (which checks for the other conditions first)
+
+one_row functions (one_row_cheap_seats,one_row_expensive_seats, one_row_any_seats)
+	  purpose: attempts to fill seat requests all in the same row
+	arguments: stadium array, hypothetical seating array
+	  returns: bool
+	  effects: checks for unfilled seats in the appropriate row/section, fills hypothetical array with those spots and then puts 			   in a sentinel like value after the last seat is filled (so the stadium array can be made to reflect it)
+	    notes: doesn't alter array
+
+discount_seats
+	  purpose: return to seats available that seats are discounted (may not be necesary based on PR function)
+	arguments: stadium array, hypothetical seating array
+	  returns: bool
+	  effects: no changes, just passes on info appropriately
+	    notes: doesn't alter array
+
+any_row functions (any_row_cheap_seats,any_row_expensive_seats, any_row_any_seats)
+	  purpose: attempts to fill seat requests in any row
+	arguments: stadium array, hypothetical seating array
+	  returns: bool
+	  effects: checks for unfilled seats in any appropriate row/section, fills hypothetical array with those spots and then puts 			   in a sentinel like value after the last seat is filled (so the stadium array can be made to reflect it without 			   needing to empty it each time)
+	    notes: doesn't alter array
+
+
+
+

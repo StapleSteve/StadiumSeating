@@ -1,0 +1,11 @@
+/*
+*	    name: StadiumSeating.cpp
+*        author: Thomas Moody
+* date modified: 28 October 2012
+*
+*       purpose: Maintains a seating chart for a stadium, allows users to 
+*                buy seats, cancel reservations, print out a seating chart, 
+*                or close out the program
+*
+*
+*/
